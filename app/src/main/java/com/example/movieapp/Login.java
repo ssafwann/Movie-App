@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 public class Login extends AppCompatActivity {
 
 
@@ -18,6 +20,8 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
 
         // button that sends to the sign up page
         Button button = (Button) findViewById(R.id.signup_btn);
