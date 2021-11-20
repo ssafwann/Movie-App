@@ -115,13 +115,17 @@ public class Login extends AppCompatActivity {
                         String userNameFromDB = dataSnapshot.child(userEnteredUsername).child("username").getValue(String.class);
                         String ageFromDB = dataSnapshot.child(userEnteredUsername).child("age").getValue(String.class);
                         String creditsFromDB = dataSnapshot.child(userEnteredUsername).child("credits").getValue(String.class);
+                        String idFromDB = dataSnapshot.child(userEnteredUsername).child("id").getValue(String.class);
 
                         Intent intent = new Intent(getApplicationContext(),HomePage.class);
+
                         intent.putExtra("username",userNameFromDB);
                         intent.putExtra("password",passwordFromDB);
                         intent.putExtra("age",ageFromDB);
                         intent.putExtra("credits",creditsFromDB);
+                        intent.putExtra("id",idFromDB);
 
+									
                         Toast toast = Toast.makeText(getApplicationContext(),"Login Successful",Toast.LENGTH_SHORT);
                         toast.show();
                         startActivity(intent);

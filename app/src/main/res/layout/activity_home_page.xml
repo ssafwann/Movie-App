@@ -9,27 +9,40 @@
     tools:context="com.example.movieapp.HomePage"
     tools:openDrawer="start">
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#fff"
+            android:id="@+id/toolbar"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/Theme.AppCompat.Light"
+            android:elevation="4dp" />
+
+
+
+
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
+            tools:context=".ui.MainActivity">
 
-            <androidx.appcompat.widget.Toolbar
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="#fff"
-                android:id="@+id/toolbar"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/Theme.AppCompat.Light"
-                android:elevation="4dp"/>
-
-            <FrameLayout
-                android:id="@+id/fragment_container"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
+        </FrameLayout>
 
-        </LinearLayout>
+
+    </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
@@ -41,4 +54,8 @@
 
 
 
+
+
+
 </androidx.drawerlayout.widget.DrawerLayout>
+

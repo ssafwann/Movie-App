@@ -14,6 +14,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.UUID;
+
 public class SignUp extends AppCompatActivity {
 
     DatabaseReference reference = FirebaseDatabase.getInstance("https://movie-app-d9b4f-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users");
@@ -37,7 +39,7 @@ public class SignUp extends AppCompatActivity {
                 String password = regPassword.getEditText().getText().toString();
                 String age = regAge.getEditText().getText().toString();
                 String credits = "150"; // give user 150 credits for registration
-
+                String id = reference.push().getKey();
 
 
                 if (username.isEmpty() && password.isEmpty() && age.isEmpty()) {
@@ -57,7 +59,7 @@ public class SignUp extends AppCompatActivity {
                 regAge.setErrorEnabled(false);
 
 
-                UserHelperClass helperClass = new UserHelperClass(username,password,age,credits);
+                UserHelperClass helperClass = new UserHelperClass(username,password,age,credits,id);
                 reference.child(username).setValue(helperClass);
                 Toast toast = Toast.makeText(getApplicationContext(),"Account created, you may login",Toast.LENGTH_SHORT);
                 toast.show();
