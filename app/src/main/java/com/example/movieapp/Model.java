@@ -3,18 +3,19 @@ package com.example.movieapp;
 public class Model {
 
     String genre, image, name, price;
-    String rating,release;
+    String rating,release, shortDesc;
 
     public Model() {
     }
 
-    public Model(String genre, String image, String name, String price, String rating, String release) {
+    public Model(String genre, String image, String name, String price, String rating, String release, String shortDesc) {
         this.genre = genre;
         this.image = image;
         this.name = name;
         this.price = price;
         this.rating = rating;
         this.release = release;
+        this.shortDesc = shortDesc;
     }
 
     public String getGenre() {
@@ -63,5 +64,13 @@ public class Model {
 
     public void setRelease(String release) {
         this.release = release;
+    }
+
+    public String getShortDesc() {
+        return shortDesc;
+    }
+
+    public void setShortDesc(String shortDesc) {
+        this.shortDesc = shortDesc;
     }
 }

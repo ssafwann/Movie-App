@@ -29,8 +29,8 @@ public class MovieAdapter extends FirebaseRecyclerAdapter<Model,MovieAdapter.myV
     @Override
     protected void onBindViewHolder(@NonNull myViewHolder myViewHolder, int i, @NonNull Model model) {
         myViewHolder.name.setText(model.getName());
-        myViewHolder.course.setText(model.getGenre());
-        myViewHolder.email.setText(model.getPrice());
+        myViewHolder.shortDesc.setText(model.getShortDesc());
+        myViewHolder.release.setText(model.getRelease());
 
         Glide.with(myViewHolder.img.getContext()).load(model.getImage()).placeholder(R.drawable.common_google_signin_btn_icon_dark)
                 .error(R.drawable.common_google_signin_btn_icon_dark_normal)
@@ -47,15 +47,15 @@ public class MovieAdapter extends FirebaseRecyclerAdapter<Model,MovieAdapter.myV
     class myViewHolder extends RecyclerView.ViewHolder {
 
         ImageView img;
-        TextView name,course,email;
+        TextView name,shortDesc,release;
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
 
             img = (ImageView) itemView.findViewById(R.id.img1);
             name = (TextView) itemView.findViewById(R.id.nametext);
-            course = (TextView) itemView.findViewById(R.id.coursetext);
-            email = (TextView) itemView.findViewById(R.id.emailtext);
+            shortDesc = (TextView) itemView.findViewById(R.id.shortDesctext);
+            release = (TextView) itemView.findViewById(R.id.releasetext);
         }
 
     }

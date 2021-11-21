@@ -7,10 +7,7 @@
     app:cardBackgroundColor="#40B5AD"
     app:cardCornerRadius="12dp"
     app:cardElevation="3dp"
-    app:contentPadding="8dp"
-    >
-
-
+    app:contentPadding="8dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -35,27 +32,27 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/shortDesctext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/coursetext"
-            android:text="This is Course Name"
-            android:textSize="22sp"
-            android:textColor="#000"
-            android:layout_toRightOf="@id/img1"
             android:layout_below="@id/nametext"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/img1"
+            android:text="This is Movie Genre"
+            android:textColor="#000"
+            android:textSize="17sp" />
 
 
         <TextView
+            android:id="@+id/releasetext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/emailtext"
-            android:text="This is Email Name"
-            android:textSize="22sp"
-            android:textColor="#000"
+            android:layout_below="@id/shortDesctext"
+            android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/img1"
-            android:layout_below="@id/coursetext"
-            android:layout_marginLeft="10dp"/>
+            android:text="This is Movie Price"
+            android:textColor="#000"
+            android:textSize="16sp" />
 
 
     </RelativeLayout>
