@@ -13,7 +13,9 @@ import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
-public class MovieAdapter extends FirebaseRecyclerAdapter<Model,MovieAdapter.myViewHolder> {
+public class MovieAdapter extends FirebaseRecyclerAdapter<MovieModel,MovieAdapter.myViewHolder> {
+
+
 
 
     /**
@@ -22,25 +24,62 @@ public class MovieAdapter extends FirebaseRecyclerAdapter<Model,MovieAdapter.myV
      *
      * @param options
      */
-    public MovieAdapter(@NonNull FirebaseRecyclerOptions<Model> options) {
+    public MovieAdapter(@NonNull FirebaseRecyclerOptions<MovieModel> options) {
         super(options);
     }
 
-    @Override
-    protected void onBindViewHolder(@NonNull myViewHolder myViewHolder, int i, @NonNull Model model) {
-        myViewHolder.name.setText(model.getName());
-        myViewHolder.shortDesc.setText(model.getShortDesc());
-        myViewHolder.release.setText(model.getRelease());
+    public interface OnModelClickListener {
+        void onClick(MovieModel movieModel);
+    }
 
-        Glide.with(myViewHolder.img.getContext()).load(model.getImage()).placeholder(R.drawable.common_google_signin_btn_icon_dark)
+    private OnModelClickListener onModelClickListener;
+
+    public void setOnModelClickListener(OnModelClickListener listener) {
+            this.onModelClickListener = listener;
+    }
+
+
+    @Override
+    protected void onBindViewHolder(@NonNull myViewHolder myViewHolder, int i, @NonNull MovieModel movieModel) {
+        myViewHolder.name.setText(movieModel.getName());
+        myViewHolder.shortDesc.setText(movieModel.getShortDesc());
+        myViewHolder.release.setText(movieModel.getRelease());
+
+        Glide.with(myViewHolder.img.getContext()).load(movieModel.getImage()).placeholder(R.drawable.common_google_signin_btn_icon_dark)
                 .error(R.drawable.common_google_signin_btn_icon_dark_normal)
                 .into(myViewHolder.img);
-    }
+
+        if (onModelClickListener != null) {
+            myViewHolder.itemView.setOnClickListener(v -> {
+                onModelClickListener.onClick(movieModel);
+            });
+        }
+
+
+       /*myViewHolder.itemView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (view.getContext(), MovieDetails.class);
+                Bundle bundle = new Bundle();
+
+                String test =  model.getName() + " Selected";
+
+                Toast toast = Toast.makeText(view.getContext(), test ,Toast.LENGTH_SHORT);
+                toast.show();
+
+                view.getContext().startActivity(intent);
+            }
+
+        }); */
+
+        }
+
+
 
     @NonNull
     @Override
     public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_item, parent, false);
         return new myViewHolder(view);
     }
 
@@ -57,6 +96,8 @@ public class MovieAdapter extends FirebaseRecyclerAdapter<Model,MovieAdapter.myV
             shortDesc = (TextView) itemView.findViewById(R.id.shortDesctext);
             release = (TextView) itemView.findViewById(R.id.releasetext);
         }
-
     }
+
+
+
 }

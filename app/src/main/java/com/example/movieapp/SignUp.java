@@ -1,20 +1,16 @@
 package com.example.movieapp;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.UUID;
 
 public class SignUp extends AppCompatActivity {
 
@@ -38,7 +34,7 @@ public class SignUp extends AppCompatActivity {
                 String username = regUsername.getEditText().getText().toString();
                 String password = regPassword.getEditText().getText().toString();
                 String age = regAge.getEditText().getText().toString();
-                String credits = "150"; // give user 150 credits for registration
+                int credits = 150; // give user 150 credits for registration
                 String id = reference.push().getKey();
 
 
@@ -59,7 +55,7 @@ public class SignUp extends AppCompatActivity {
                 regAge.setErrorEnabled(false);
 
 
-                UserHelperClass helperClass = new UserHelperClass(username,password,age,credits,id);
+                User helperClass = new User(username,password,age,credits,id);
                 reference.child(username).setValue(helperClass);
                 Toast toast = Toast.makeText(getApplicationContext(),"Account created, you may login",Toast.LENGTH_SHORT);
                 toast.show();

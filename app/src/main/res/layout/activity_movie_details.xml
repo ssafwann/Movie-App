@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#39A29B"
+    android:orientation="vertical"
+    android:weightSum="100"
+    tools:layout_editor_absoluteX="22dp"
+    tools:layout_editor_absoluteY="0dp">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_movieD"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#fff"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Light"
+        app:navigationIcon="?attr/homeAsUpIndicator"
+        app:popupTheme="@style/Theme.AppCompat.Light"
+        tools:ignore="MissingConstraints" />
+
+
+    <TextView
+        android:id="@+id/movie_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Star Wars: A new Hope "
+        android:textColor="#fff"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_movieD"
+        app:layout_constraintVertical_bias="0.097" />
+
+    <ImageView
+        android:id="@+id/movie_image"
+        android:layout_width="119dp"
+        android:layout_height="162dp"
+
+        android:src="@drawable/common_google_signin_btn_icon_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.054"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.216" />
+
+    <TextView
+        android:id="@+id/movie_desc"
+        android:layout_width="258dp"
+        android:layout_height="69dp"
+        android:layout_centerHorizontal="true"
+        android:text="American epic space-opera film written and directed by George Lucas, first film in the series."
+        android:textColor="#fff"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.915"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_movieD"
+        app:layout_constraintVertical_bias="0.214" />
+
+    <TextView
+        android:id="@+id/genre"
+        android:layout_width="65dp"
+        android:layout_height="29dp"
+        android:layout_centerHorizontal="true"
+        android:text="Genres: "
+        android:textColor="#fff"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.034"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_movieD"
+        app:layout_constraintVertical_bias="0.444" />
+
+    <TextView
+        android:id="@+id/cast"
+        android:layout_width="45dp"
+        android:layout_height="29dp"
+        android:layout_centerHorizontal="true"
+        android:text="Cast:"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_movieD" />
+
+
+    <TextView
+        android:id="@+id/movie_genre"
+        android:layout_width="287dp"
+        android:layout_height="29dp"
+        android:layout_centerHorizontal="true"
+        android:text="Action, Adventure, Fantasy, Sci-Fi"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.629"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_movieD"
+        app:layout_constraintVertical_bias="0.444" />
+
+    <TextView
+        android:id="@+id/movie_cast"
+        android:layout_width="266dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:text="Mark Hamill, Harrison Ford and Carrie Fisher"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.386"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_movieD"
+        app:layout_constraintVertical_bias="0.515" />
+
+    <TextView
+        android:id="@+id/movie_director"
+        android:layout_width="287dp"
+        android:layout_height="29dp"
+        android:layout_centerHorizontal="true"
+        android:text="George Lucas"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.669"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_movieD"
+        app:layout_constraintVertical_bias="0.579" />
+
+    <TextView
+        android:id="@+id/rating"
+        android:layout_width="60dp"
+        android:layout_height="29dp"
+        android:layout_centerHorizontal="true"
+        android:text="Rating:"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.034"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_movieD"
+        app:layout_constraintVertical_bias="0.692" />
+
+    <TextView
+        android:id="@+id/writer"
+        android:layout_width="55dp"
+        android:layout_height="29dp"
+        android:layout_centerHorizontal="true"
+        android:text="Writer:"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.034"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_movieD"
+        app:layout_constraintVertical_bias="0.636" />
+
+    <TextView
+        android:id="@+id/movie_writer"
+        android:layout_width="287dp"
+        android:layout_height="29dp"
+        android:layout_centerHorizontal="true"
+        android:text="George Lucas"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.54"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_movieD"
+        app:layout_constraintVertical_bias="0.636" />
+
+    <TextView
+        android:id="@+id/movie_rating"
+        android:layout_width="287dp"
+        android:layout_height="29dp"
+        android:layout_centerHorizontal="true"
+        android:text="5/10 stars"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.58"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_movieD"
+        app:layout_constraintVertical_bias="0.692" />
+
+    <TextView
+        android:id="@+id/director"
+        android:layout_width="71dp"
+        android:layout_height="29dp"
+        android:layout_centerHorizontal="true"
+        android:text="Director: "
+        android:textColor="#fff"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.035"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_movieD"
+        app:layout_constraintVertical_bias="0.579" />
+
+    <View
+        android:id="@+id/divider5"
+        android:layout_width="409dp"
+        android:layout_height="3dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="2dp"
+        android:background="#fff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rating" />
+
+    <TextView
+        android:id="@+id/movie_release"
+        android:layout_width="137dp"
+        android:layout_height="26dp"
+        android:layout_centerHorizontal="true"
+        android:text="Released in 2017"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.514"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_movieD"
+        app:layout_constraintVertical_bias="0.306" />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="61dp"
+        android:layout_height="29dp"
+        android:layout_centerHorizontal="true"
+        android:text="Price: $"
+        android:textColor="#000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.728"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="91dp"
+        android:layout_height="3dp"
+        android:layout_marginEnd="65dp"
+        android:layout_marginBottom="93dp"
+        android:background="#000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/movie_price"
+        android:layout_width="30dp"
+        android:layout_height="29dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="65dp"
+        android:text="128"
+        android:textColor="#000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/divider"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/movie_runtime"
+        android:layout_width="65dp"
+        android:layout_height="26dp"
+        android:layout_centerHorizontal="true"
+        android:text="2h 1m"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.866"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar_movieD"
+        app:layout_constraintVertical_bias="0.306" />
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="409dp"
+        android:layout_height="3dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="4dp"
+        android:background="#fff"
+        app:layout_constraintBottom_toTopOf="@+id/movie_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movie_name" />
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="409dp"
+        android:layout_height="3dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="11dp"
+        android:background="#fff"
+        app:layout_constraintBottom_toTopOf="@+id/genre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movie_image" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="170dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginBottom="10dp"
+        android:background="#FFFFFF"
+        android:text="Add To Cart"
+        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider5" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="170dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="54dp"
+        android:text="Purchase Now!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,51 +1,57 @@
 package com.example.movieapp;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.TextView;
-
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.Serializable;
-
-public class UserProfile extends AppCompatActivity  {
+public class Cart extends AppCompatActivity {
 
     DrawerLayout drawer;
-    TextView usernameLabel, ageLabel, creditsLabel, passwordLabel;
-    DatabaseReference ref;
     User loggedInUser;
-
-
+    Button addCredits;
+    DatabaseReference reference = FirebaseDatabase.getInstance("https://movie-app-d9b4f-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile);
+        setContentView(R.layout.activity_cart);
 
         createLayout();
         getLoggedUser();
 
-        usernameLabel = findViewById(R.id.username_profile);
-        passwordLabel = findViewById(R.id.password_profile);
-        ageLabel = findViewById(R.id.age_profile);
-        creditsLabel = findViewById(R.id.credits_profile);
+        addCredits = (Button) findViewById(R.id.crediting);
+        addCredits.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int newCredits = loggedInUser.getCredits() + 50;
+                loggedInUser.setCredits(newCredits);
+                Toast toast = Toast.makeText(getApplication(), "credits added" ,Toast.LENGTH_SHORT);
+                toast.show();
+                reference.child(loggedInUser.getUsername()).child("credits").setValue(newCredits);
+            }
+        });
 
-        // show all user data
-        showAllUserData();
     }
 
     public void createLayout() {
@@ -71,7 +77,6 @@ public class UserProfile extends AppCompatActivity  {
     }
 
 
-
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {
             case R.id.nav_home:
@@ -80,14 +85,14 @@ public class UserProfile extends AppCompatActivity  {
                 startActivity(intent);
                 break;
             case R.id.nav_profile:
-                break;
-            case R.id.nav_cart:
-                Intent intent2 = new Intent (getApplicationContext(), Cart.class);
+                Intent intent2 = new Intent (getApplicationContext(), UserProfile.class);
                 intent2.putExtra("user", loggedInUser);
                 startActivity(intent2);
                 break;
+            case R.id.nav_cart:
+                break;
             case R.id.nav_logout:
-                logout(UserProfile.this);
+                logout(Cart.this);
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);
@@ -112,22 +117,5 @@ public class UserProfile extends AppCompatActivity  {
             }
         });
         builder.show();
-    }
-
-    private void readData() {
-        ref = FirebaseDatabase.getInstance().getReference("users");
-
-    }
-
-    private void showAllUserData() {
-        String user_username = loggedInUser.getUsername();
-        String user_password = loggedInUser.getPassword();
-        String user_age = loggedInUser.getAge();
-        int user_credits = loggedInUser.getCredits();
-
-        usernameLabel.setText(user_username);
-        passwordLabel.setText(user_password);
-        ageLabel.setText(user_age);
-      //  creditsLabel.setText(user_credits);
     }
 }

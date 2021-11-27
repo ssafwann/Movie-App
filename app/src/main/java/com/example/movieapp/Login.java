@@ -5,11 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-import android.view.View.OnClickListener;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
@@ -28,7 +27,6 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
 
         // button that sends to the sign up page
         Button button = (Button) findViewById(R.id.signup_btn);
@@ -99,33 +97,25 @@ public class Login extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-
                     username.setError(null);
                     username.setErrorEnabled(false);
 
-
                     String passwordFromDB = dataSnapshot.child(userEnteredUsername).child("password").getValue(String.class);
 
-
                     if (passwordFromDB.equals(userEnteredPassword)) {
-
                         username.setError(null);
                         username.setErrorEnabled(false);
 
                         String userNameFromDB = dataSnapshot.child(userEnteredUsername).child("username").getValue(String.class);
                         String ageFromDB = dataSnapshot.child(userEnteredUsername).child("age").getValue(String.class);
-                        String creditsFromDB = dataSnapshot.child(userEnteredUsername).child("credits").getValue(String.class);
+                        int creditsFromDB = dataSnapshot.child(userEnteredUsername).child("credits").getValue(int.class);
                         String idFromDB = dataSnapshot.child(userEnteredUsername).child("id").getValue(String.class);
 
+                        // make a user object with all of the user's data from firebase and pass to
+                        User user = new User(userNameFromDB, passwordFromDB, ageFromDB, creditsFromDB, idFromDB);
                         Intent intent = new Intent(getApplicationContext(),HomePage.class);
+                        intent.putExtra("user", user);
 
-                        intent.putExtra("username",userNameFromDB);
-                        intent.putExtra("password",passwordFromDB);
-                        intent.putExtra("age",ageFromDB);
-                        intent.putExtra("credits",creditsFromDB);
-                        intent.putExtra("id",idFromDB);
-
-									
                         Toast toast = Toast.makeText(getApplicationContext(),"Login Successful",Toast.LENGTH_SHORT);
                         toast.show();
                         startActivity(intent);
@@ -140,10 +130,8 @@ public class Login extends AppCompatActivity {
                     username.requestFocus();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }

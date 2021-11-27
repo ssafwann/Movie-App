@@ -12,10 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieApp">
         <activity
+            android:name=".MovieDetails"
+            android:exported="true" />
+        <activity
             android:name=".UserProfile"
             android:exported="true" />
         <activity
-            android:name=".MainActivity2"
+            android:name=".Cart"
             android:exported="true" />
         <activity
             android:name=".HomePage"
@@ -26,7 +29,6 @@
         <activity
             android:name=".Login"
             android:exported="true" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true">

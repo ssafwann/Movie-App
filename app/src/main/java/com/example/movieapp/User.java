@@ -1,17 +1,18 @@
 package com.example.movieapp;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class UserHelperClass {
+public class User implements Serializable {
 
     String username, password, age;
-    String credits;
+    int credits;
     String id;
 
-    public UserHelperClass() {
+    public User() {
     }
 
-    public UserHelperClass(String username, String password, String age, String credits, String id) {
+    public User(String username, String password, String age, int credits, String id) {
         this.username = username;
         this.password = password;
         this.age = age;
@@ -43,11 +44,11 @@ public class UserHelperClass {
         this.age = age;
     }
 
-    public String getCredits() {
+    public int getCredits() {
         return credits;
     }
 
-    public void setCredits(String credits) {
+    public void setCredits(int credits) {
         this.credits = credits;
     }
 
