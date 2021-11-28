@@ -6,8 +6,10 @@ import android.graphics.Movie;
 import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +27,8 @@ public class MovieDetails extends AppCompatActivity {
     ImageView movieImage;
     MovieModel movie;
 
+    Button cartButton, purchaseButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +45,17 @@ public class MovieDetails extends AppCompatActivity {
                 finish();
             }
             });
+
+        cartButton = (Button) findViewById(R.id.cart_button);
+        purchaseButton = (Button) findViewById(R.id.purchase_button);
+
+        cartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toast = Toast.makeText(getApplication(), " added to the cart" ,Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
     }
 
     public void getMovie() {

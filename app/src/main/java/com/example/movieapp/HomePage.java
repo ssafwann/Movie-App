@@ -31,6 +31,7 @@ public class HomePage extends AppCompatActivity implements NavigationBarView.OnI
     MovieAdapter mainAdapter;
     User loggedInUser;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
