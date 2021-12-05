@@ -6,11 +6,17 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/video_camera"
+        android:icon="@drawable/clapperboard__1_"
         android:label="Movie Star"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MovieApp">
+        <activity
+            android:name=".OrderDetails"
+            android:exported="true" />
+        <activity
+            android:name=".OrderHistory"
+            android:exported="true" />
         <activity
             android:name=".MovieDetails"
             android:exported="true" />

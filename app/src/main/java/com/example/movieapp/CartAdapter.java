@@ -13,56 +13,40 @@ import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
-public class MovieAdapter extends FirebaseRecyclerAdapter<MovieModel,MovieAdapter.myViewHolder> {
+public class CartAdapter extends FirebaseRecyclerAdapter<MovieModel,CartAdapter.myViewHolder> {
 
-    public MovieAdapter(@NonNull FirebaseRecyclerOptions<MovieModel> options) {
+    public CartAdapter(@NonNull FirebaseRecyclerOptions<MovieModel> options) {
         super(options);
-    }
-
-    public interface OnModelClickListener {
-        void onClick(MovieModel movieModel);
-    }
-
-    private OnModelClickListener onModelClickListener;
-
-    public void setOnModelClickListener(OnModelClickListener listener) {
-            this.onModelClickListener = listener;
     }
 
     @Override
     protected void onBindViewHolder(@NonNull myViewHolder myViewHolder, int i, @NonNull MovieModel movieModel) {
-        myViewHolder.name.setText(movieModel.getName());
-        myViewHolder.shortDesc.setText(movieModel.getShortDesc());
-        myViewHolder.release.setText(movieModel.getRelease());
+        myViewHolder.movieName.setText(movieModel.getName());
+        myViewHolder.price.setText(String.valueOf(movieModel.getPrice()));
 
         Glide.with(myViewHolder.img.getContext()).load(movieModel.getImage()).placeholder(R.drawable.common_google_signin_btn_icon_dark)
                 .error(R.drawable.common_google_signin_btn_icon_dark_normal)
                 .into(myViewHolder.img);
-
-        if (onModelClickListener != null) {
-            myViewHolder.itemView.setOnClickListener(v -> {
-                onModelClickListener.onClick(movieModel);
-            });
-        }
     }
 
     @NonNull
     @Override
     public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.movie_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_item, parent, false);
         return new myViewHolder(view);
     }
 
     class myViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
-        TextView name,shortDesc,release;
+        TextView movieName, price;
+        ImageView delete;
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
             img = (ImageView) itemView.findViewById(R.id.img1);
-            name = (TextView) itemView.findViewById(R.id.nametext);
-            shortDesc = (TextView) itemView.findViewById(R.id.shortDesctext);
-            release = (TextView) itemView.findViewById(R.id.releasetext);
+            movieName = (TextView) itemView.findViewById(R.id.movie_name_text);
+            price = (TextView) itemView.findViewById(R.id.price_text);
+            delete = (ImageView) itemView.findViewById(R.id.delete_image);
         }
     }
 }

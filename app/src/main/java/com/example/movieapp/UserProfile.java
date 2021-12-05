@@ -13,7 +13,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputLayout;
@@ -25,11 +28,10 @@ import java.io.Serializable;
 public class UserProfile extends AppCompatActivity  {
 
     DrawerLayout drawer;
-    TextView usernameLabel, ageLabel, creditsLabel, passwordLabel;
+    TextView usernameLabel, creditsLabel;
+    Button orderHistory;
     DatabaseReference ref;
     User loggedInUser;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +42,20 @@ public class UserProfile extends AppCompatActivity  {
         getLoggedUser();
 
         usernameLabel = findViewById(R.id.username_profile);
-        passwordLabel = findViewById(R.id.password_profile);
-        ageLabel = findViewById(R.id.age_profile);
         creditsLabel = findViewById(R.id.credits_profile);
 
         // show all user data
         showAllUserData();
+
+        orderHistory = (Button) findViewById(R.id.view_purchases);
+        orderHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (getApplication(), OrderHistory.class);
+                intent.putExtra("user", loggedInUser);
+                startActivity(intent);
+            }
+        });
     }
 
     public void createLayout() {
@@ -69,8 +79,6 @@ public class UserProfile extends AppCompatActivity  {
         Intent intent = getIntent();
         loggedInUser = (User) getIntent().getSerializableExtra("user");
     }
-
-
 
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {
@@ -121,13 +129,10 @@ public class UserProfile extends AppCompatActivity  {
 
     private void showAllUserData() {
         String user_username = loggedInUser.getUsername();
-        String user_password = loggedInUser.getPassword();
-        String user_age = loggedInUser.getAge();
         int user_credits = loggedInUser.getCredits();
 
         usernameLabel.setText(user_username);
-        passwordLabel.setText(user_password);
-        ageLabel.setText(user_age);
-      //  creditsLabel.setText(user_credits);
+        creditsLabel.setText(String.valueOf(user_credits));
+
     }
 }

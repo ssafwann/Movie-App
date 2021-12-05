@@ -2,23 +2,22 @@ package com.example.movieapp;
 
 
 import android.content.Intent;
-import android.graphics.Movie;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-
-import org.w3c.dom.Text;
-
-import java.net.URL;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MovieDetails extends AppCompatActivity {
 
@@ -26,7 +25,7 @@ public class MovieDetails extends AppCompatActivity {
     TextView movieDirector, movieWriter, movieRuntime, movieCast;
     ImageView movieImage;
     MovieModel movie;
-
+    User loggedInUser;
     Button cartButton, purchaseButton;
 
     @Override
@@ -52,15 +51,24 @@ public class MovieDetails extends AppCompatActivity {
         cartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast toast = Toast.makeText(getApplication(), " added to the cart" ,Toast.LENGTH_SHORT);
-                toast.show();
+                addMovieToCart();
             }
         });
+    }
+
+    private void addMovieToCart() {
+        DatabaseReference reference = FirebaseDatabase.getInstance("https://movie-app-d9b4f-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("cart");
+        MovieModel helperClass = new MovieModel(movie.getGenre(), movie.getImage(), movie.getName(), movie.getPrice(),
+        movie.getRating(),movie.getRelease(),movie.getShortDesc(),movie.getRuntime(),movie.getWriter(),movie.getDirector(), movie.getCast());
+        reference.child(loggedInUser.getUsername()).child(movie.getName()).setValue(helperClass);
+        Toast toast = Toast.makeText(getApplication(), " added to the cart" ,Toast.LENGTH_SHORT);
+        toast.show();
     }
 
     public void getMovie() {
         Intent intent = getIntent();
         movie = (MovieModel) getIntent().getSerializableExtra("movie");
+        loggedInUser = (User) getIntent().getSerializableExtra("user");
     }
 
     public void intializeTextViews() {
@@ -72,17 +80,13 @@ public class MovieDetails extends AppCompatActivity {
         movieCast = findViewById(R.id.movie_cast);
     }
 
-
     private void showMovieData() {
         String movie_name = movie.getName(); String movie_desc = movie.getShortDesc();
         String movie_genre = movie.getGenre(); String movie_rating = movie.getRating();
         String movie_release = movie.getRelease(); String movie_image = movie.getImage();
         String movie_director = movie.getDirector(); String movie_writer = movie.getWriter();
         String movie_cast = movie.getCast(); String movie_runtime = movie.getRuntime();
-
-        // convert long to string
-        Long movie_long_price = movie.getPrice();
-        String movie_price =String.valueOf(movie_long_price);
+        String movie_price =String.valueOf(movie.getPrice());
 
         movieName.setText(movie_name); movieDesc.setText(movie_desc);
         movieGenre.setText(movie_genre); movieRating.setText(movie_rating);
@@ -91,5 +95,4 @@ public class MovieDetails extends AppCompatActivity {
         movieDirector.setText(movie_director); movieCast.setText(movie_cast);
         movieWriter.setText(movie_writer); movieRuntime.setText(movie_runtime);
     }
-
 }

@@ -4,11 +4,15 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Movie;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,42 +23,118 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class Cart extends AppCompatActivity {
-
     DrawerLayout drawer;
     User loggedInUser;
-    Button addCredits;
-    DatabaseReference reference = FirebaseDatabase.getInstance("https://movie-app-d9b4f-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users");
+    RecyclerView recyclerView;
+    CartAdapter mainAdapter;
+    TextView totalPrice, totalQuantity;
+    Button purchase;
+    final Long[] total_price = {0L};
+    int newCredits;
+    List<MovieModel> allCartItems = new ArrayList<>();
+    int oldCredits;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        createLayout();
-        getLoggedUser();
+        Intent intent = getIntent();
+        loggedInUser = (User) getIntent().getSerializableExtra("user");
+        oldCredits = loggedInUser.getCredits();
 
-        addCredits = (Button) findViewById(R.id.crediting);
-        addCredits.setOnClickListener(new View.OnClickListener() {
+        createLayout();
+
+        totalPrice = (TextView) findViewById(R.id.cart_total_price);
+        totalQuantity = (TextView) findViewById(R.id.cart_total_item);
+
+        addCartItemsToArray();
+
+        purchase = (Button) findViewById(R.id.cart_purchase_button);
+        purchase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int newCredits = loggedInUser.getCredits() + 50;
-                loggedInUser.setCredits(newCredits);
-                Toast toast = Toast.makeText(getApplication(), "credits added" ,Toast.LENGTH_SHORT);
-                toast.show();
-                reference.child(loggedInUser.getUsername()).child("credits").setValue(newCredits);
+                purhaseCartItems();
             }
         });
+    }
 
+    private void purhaseCartItems() {
+        if (allCartItems.size() != 0) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(Cart.this);
+            builder.setTitle("Purchase Confirmation");
+            builder.setMessage("Do you wish to confirm your purchase?");
+            builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if (allCartItems.size() != 0) {
+
+                    }
+                    newCredits = newCredits + loggedInUser.credits;
+                    DatabaseReference reference = FirebaseDatabase.getInstance("https://movie-app-d9b4f-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users");
+                    loggedInUser.setCredits(newCredits);
+                    Toast toast = Toast.makeText(getApplication(), "purchase successful, credits added" ,Toast.LENGTH_SHORT);
+                    toast.show();
+
+                    addCartItemsToOrder();
+                    finish();
+                    startActivity(getIntent());
+
+                    reference.child(loggedInUser.getUsername()).child("credits").setValue(newCredits);
+                }
+            });
+            builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            builder.show();
+        }
+        else {
+            Toast toast = Toast.makeText(getApplication(), "no items in cart" ,Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
+    private void addCartItemsToOrder() {
+        DatabaseReference reference = FirebaseDatabase.getInstance("https://movie-app-d9b4f-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference("cart").child(loggedInUser.getUsername());
+        DatabaseReference reference1 = FirebaseDatabase.getInstance("https://movie-app-d9b4f-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("purchases");
+        String date = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(new Date());
+        String id = reference.push().getKey();
+        OrderModel helperClass = new OrderModel(allCartItems, date, total_price[0], Long.valueOf(allCartItems.size()), id, (newCredits - oldCredits));
+        reference1.child(loggedInUser.getUsername()).child(id).setValue(helperClass);
+        reference.setValue(null);
     }
 
     public void createLayout() {
+        // RecyclerView code with firebase
+        recyclerView = (RecyclerView) findViewById(R.id.cart_rv);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        FirebaseRecyclerOptions<MovieModel> options =
+                new FirebaseRecyclerOptions.Builder<MovieModel>()
+                        .setQuery(FirebaseDatabase.getInstance(
+                                "https://movie-app-d9b4f-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                                .getReference("cart").child(loggedInUser.getUsername()), MovieModel.class).build();
+
+        mainAdapter = new CartAdapter(options);
+        recyclerView.setAdapter(mainAdapter);
+
         // toolbar and navigation drawer code
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -71,21 +151,15 @@ public class Cart extends AppCompatActivity {
         toggle.syncState();
     }
 
-    public void getLoggedUser() {
-        Intent intent = getIntent();
-        loggedInUser = (User) getIntent().getSerializableExtra("user");
-    }
-
-
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.nav_home:
-                Intent intent = new Intent (getApplicationContext(), HomePage.class);
+                Intent intent = new Intent(getApplicationContext(), HomePage.class);
                 intent.putExtra("user", loggedInUser);
                 startActivity(intent);
                 break;
             case R.id.nav_profile:
-                Intent intent2 = new Intent (getApplicationContext(), UserProfile.class);
+                Intent intent2 = new Intent(getApplicationContext(), UserProfile.class);
                 intent2.putExtra("user", loggedInUser);
                 startActivity(intent2);
                 break;
@@ -118,4 +192,52 @@ public class Cart extends AppCompatActivity {
         });
         builder.show();
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mainAdapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mainAdapter.stopListening();
+    }
+
+    public void addCartItemsToArray() {
+        DatabaseReference rootRef = FirebaseDatabase.getInstance("https://movie-app-d9b4f-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("cart");
+        DatabaseReference cartMoviesRef = rootRef.child(loggedInUser.getUsername());
+
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    MovieModel movie = new MovieModel(
+                            ds.child("genre").getValue(String.class),ds.child("image").getValue(String.class),
+                            ds.child("name").getValue(String.class), ds.child("price").getValue(Long.class),
+                            ds.child("rating").getValue(String.class), ds.child("release").getValue(String.class),
+                            ds.child("shortDesc").getValue(String.class), ds.child("runtime").getValue(String.class),
+                            ds.child("writer").getValue(String.class), ds.child("director").getValue(String.class),
+                            ds.child("cast").getValue(String.class));
+                    total_price[0] = movie.getPrice() + total_price[0];
+                    allCartItems.add(movie);
+                    Log.d("MOVIE", String.valueOf(movie));
+                }
+                totalQuantity.setText(String.valueOf(allCartItems.size()));
+                totalPrice.setText(String.valueOf(total_price[0]));
+
+                if (allCartItems.size() != 0)
+                newCredits = (int) (total_price[0] / allCartItems.size());
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        };
+        cartMoviesRef.addListenerForSingleValueEvent(eventListener);
+    }
 }
+
+
+
+
+

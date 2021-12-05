@@ -29,14 +29,12 @@ public class SignUp extends AppCompatActivity {
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 // get all values
                 String username = regUsername.getEditText().getText().toString();
                 String password = regPassword.getEditText().getText().toString();
                 String age = regAge.getEditText().getText().toString();
                 int credits = 150; // give user 150 credits for registration
                 String id = reference.push().getKey();
-
 
                 if (username.isEmpty() && password.isEmpty() && age.isEmpty()) {
                     regUsername.setError("Field cannot be empty");
@@ -54,16 +52,12 @@ public class SignUp extends AppCompatActivity {
                 regUsername.setErrorEnabled(false);
                 regAge.setErrorEnabled(false);
 
-
                 User helperClass = new User(username,password,age,credits,id);
                 reference.child(username).setValue(helperClass);
                 Toast toast = Toast.makeText(getApplicationContext(),"Account created, you may login",Toast.LENGTH_SHORT);
                 toast.show();
             }
-
         });
-
-
     }
 
     public void goBack(View view) {

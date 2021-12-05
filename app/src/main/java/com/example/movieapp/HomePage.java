@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
@@ -30,7 +31,6 @@ public class HomePage extends AppCompatActivity implements NavigationBarView.OnI
     RecyclerView recyclerView;
     MovieAdapter mainAdapter;
     User loggedInUser;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +83,7 @@ public class HomePage extends AppCompatActivity implements NavigationBarView.OnI
                     movieModel.getRuntime(), movieModel.getWriter(), movieModel.getDirector(), movieModel.getCast());
 
             intent.putExtra("movie", movie);
+            intent.putExtra("user", loggedInUser);
 
             Toast toast = Toast.makeText(getApplication(), test ,Toast.LENGTH_SHORT);
             toast.show();
@@ -94,9 +95,43 @@ public class HomePage extends AppCompatActivity implements NavigationBarView.OnI
     // for the search bar
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) item.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s){
+                processSearch(s);
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String s){
+                processSearch(s);
+                return false;
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                finish();
+                startActivity(getIntent());
+                return false;
+            }
+        });
         return super.onCreateOptionsMenu(menu);
     }
 
+    private void processSearch(String s)
+    {
+        FirebaseRecyclerOptions<MovieModel> options =
+                new FirebaseRecyclerOptions.Builder<MovieModel>()
+                        .setQuery(FirebaseDatabase.getInstance("https://movie-app-d9b4f-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("movie").orderByChild("name").startAt(s).endAt(s), MovieModel.class).build();
+
+        onStop();
+        mainAdapter = new MovieAdapter(options);
+        mainAdapter.startListening();
+        recyclerView.setAdapter(mainAdapter);
+        onRecyclerItemClick();
+    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
