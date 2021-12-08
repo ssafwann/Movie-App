@@ -25,6 +25,8 @@ public class OrderAdapter extends FirebaseRecyclerAdapter<OrderModel,OrderAdapte
         void onClick(OrderModel orderModel);
     }
 
+
+
     private OnModelClickListener onModelClickListener;
 
     public void setOnModelClickListener(OnModelClickListener listener) {
@@ -43,6 +45,8 @@ public class OrderAdapter extends FirebaseRecyclerAdapter<OrderModel,OrderAdapte
             });
         }
     }
+
+
 
     @NonNull
     @Override

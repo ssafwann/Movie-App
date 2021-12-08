@@ -50,7 +50,8 @@
             android:hint="Username"
             android:textColorHint="@color/black"
             app:counterMaxLength="15"
-            app:boxStrokeColor="#0052FF"
+            app:boxStrokeColor="#88304E"
+            app:hintTextColor="#88304E"
             app:startIconDrawable="@drawable/ic_baseline_person_24"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox" >
 
@@ -68,10 +69,11 @@
             android:layout_height="wrap_content"
             android:hint="Password"
             android:textColorHint="@color/black"
-            app:boxStrokeColor="#0052FF"
+            app:boxStrokeColor="#88304E"
             app:passwordToggleEnabled="true"
             app:startIconDrawable="@drawable/ic_baseline_lock_24"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:hintTextColor="#88304E"
             >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -88,9 +90,10 @@
             android:layout_height="wrap_content"
             android:hint="Age"
             android:textColorHint="@color/black"
-            app:boxStrokeColor="#0052FF"
+            app:boxStrokeColor="#88304E"
             app:startIconDrawable="@drawable/ic_baseline_date_range_24"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:hintTextColor="#88304E"
             >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -109,7 +112,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
-        android:background="#0000FF"
+        android:background="#E23E57"
         android:text="SIGN UP"
         android:textAllCaps="true"
         android:textColor="#fff" />

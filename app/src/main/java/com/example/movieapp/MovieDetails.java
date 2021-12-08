@@ -54,6 +54,16 @@ public class MovieDetails extends AppCompatActivity {
                 addMovieToCart();
             }
         });
+
+        purchaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addMovieToCart();
+                Intent intent = new Intent (getApplication(), Cart.class);
+                intent.putExtra("user", loggedInUser);
+                startActivity(intent);
+            }
+        });
     }
 
     private void addMovieToCart() {

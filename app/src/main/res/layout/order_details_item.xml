@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="5dp"
-    app:cardBackgroundColor="#39A29B"
+    app:cardBackgroundColor="#522546"
     app:cardCornerRadius="12dp"
     app:cardElevation="3dp">
 
@@ -42,7 +42,8 @@
             android:layout_toRightOf="@id/price"
             android:text="128"
             android:textColor="#fff"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/price"

@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -71,6 +72,7 @@ public class Cart extends AppCompatActivity {
                 purhaseCartItems();
             }
         });
+
     }
 
     private void purhaseCartItems() {
@@ -122,6 +124,18 @@ public class Cart extends AppCompatActivity {
         reference.setValue(null);
     }
 
+    public void onRecyclerItemClick() {
+        mainAdapter.setOnModelClickListener(movieModel -> {
+            DatabaseReference reference = FirebaseDatabase.getInstance("https://movie-app-d9b4f-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                    .getReference("cart").child(loggedInUser.getUsername()).child(movieModel.getName());
+            reference.setValue(null);
+            finish();
+            startActivity(getIntent());
+            Toast toast = Toast.makeText(getApplication(), "item was removed" ,Toast.LENGTH_SHORT);
+            toast.show();
+        });
+    }
+
     public void createLayout() {
         // RecyclerView code with firebase
         recyclerView = (RecyclerView) findViewById(R.id.cart_rv);
@@ -134,6 +148,8 @@ public class Cart extends AppCompatActivity {
 
         mainAdapter = new CartAdapter(options);
         recyclerView.setAdapter(mainAdapter);
+        onRecyclerItemClick();
+
 
         // toolbar and navigation drawer code
         Toolbar toolbar = findViewById(R.id.toolbar);

@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="5dp"
-    app:cardBackgroundColor="#39A29B"
+    app:cardBackgroundColor="#88304E"
     app:cardCornerRadius="12dp"
     app:cardElevation="3dp">
 
@@ -59,7 +59,7 @@
             android:layout_marginStart="7dp"
             android:layout_marginTop="10dp"
             android:text="Total Price: $"
-            android:textColor="#FF0000"
+            android:textColor="#F90716"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -73,7 +73,7 @@
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/total_price"
             android:text="265.00"
-            android:textColor="#FF0000"
+            android:textColor="#F90716"
             android:textSize="20sp"
             android:textStyle="bold" />
 

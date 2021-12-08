@@ -19,6 +19,17 @@ public class CartAdapter extends FirebaseRecyclerAdapter<MovieModel,CartAdapter.
         super(options);
     }
 
+    public interface OnModelClickListener {
+        void onClick(MovieModel movieModel);
+    }
+
+    private CartAdapter.OnModelClickListener onModelClickListener;
+
+    public void setOnModelClickListener(CartAdapter.OnModelClickListener listener) {
+        this.onModelClickListener = listener;
+    }
+
+
     @Override
     protected void onBindViewHolder(@NonNull myViewHolder myViewHolder, int i, @NonNull MovieModel movieModel) {
         myViewHolder.movieName.setText(movieModel.getName());
@@ -27,6 +38,12 @@ public class CartAdapter extends FirebaseRecyclerAdapter<MovieModel,CartAdapter.
         Glide.with(myViewHolder.img.getContext()).load(movieModel.getImage()).placeholder(R.drawable.common_google_signin_btn_icon_dark)
                 .error(R.drawable.common_google_signin_btn_icon_dark_normal)
                 .into(myViewHolder.img);
+
+        if (onModelClickListener != null) {
+            myViewHolder.itemView.setOnClickListener(v -> {
+                onModelClickListener.onClick(movieModel);
+            });
+        }
     }
 
     @NonNull
@@ -39,14 +56,12 @@ public class CartAdapter extends FirebaseRecyclerAdapter<MovieModel,CartAdapter.
     class myViewHolder extends RecyclerView.ViewHolder {
         ImageView img;
         TextView movieName, price;
-        ImageView delete;
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
             img = (ImageView) itemView.findViewById(R.id.img1);
             movieName = (TextView) itemView.findViewById(R.id.movie_name_text);
             price = (TextView) itemView.findViewById(R.id.price_text);
-            delete = (ImageView) itemView.findViewById(R.id.delete_image);
         }
     }
 }

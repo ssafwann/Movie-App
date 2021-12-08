@@ -7,7 +7,7 @@
     android:id="@+id/drawer_layout"
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
-    android:background="#3975a2">
+    android:background="#522546">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -33,15 +33,14 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#3975a2   ">
+            android:layout_height="match_parent">
 
             <View
                 android:id="@+id/divider8"
                 android:layout_width="409dp"
                 android:layout_height="3dp"
                 android:layout_marginTop="3dp"
-                android:background="#000"
+                android:background="#fff"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -53,7 +52,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginBottom="18dp"
                 android:text="Total Items:"
-                android:textColor="#000"
+                android:textColor="#fff"
                 android:textSize="18sp"
                 android:textStyle="bold"
 
@@ -63,12 +62,12 @@
 
             <TextView
                 android:id="@+id/cart_total_item"
-                android:layout_width="wrap_content"
+                android:layout_width="20dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="277dp"
+                android:layout_marginEnd="276dp"
                 android:layout_marginBottom="18dp"
-                android:text="10"
-                android:textColor="#000"
+                android:text="1"
+                android:textColor="#fff"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/totalPrice"
@@ -81,7 +80,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginBottom="42dp"
                 android:text="Total Price: $"
-                android:textColor="#000"
+                android:textColor="#fff"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/cart_purchase_button"
@@ -94,7 +93,7 @@
                 android:layout_marginEnd="190dp"
                 android:layout_marginBottom="42dp"
                 android:text="10"
-                android:textColor="#000"
+                android:textColor="#fff"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/cart_purchase_button"
@@ -105,7 +104,7 @@
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="28dp"
-                android:background="#0000FF"
+                android:background="#E23E57"
                 android:text="Purchase Items"
                 android:textColor="#fff"
                 app:layout_constraintBottom_toBottomOf="parent"

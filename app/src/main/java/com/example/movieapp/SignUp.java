@@ -36,6 +36,7 @@ public class SignUp extends AppCompatActivity {
                 int credits = 150; // give user 150 credits for registration
                 String id = reference.push().getKey();
 
+                // different checking criteria for the fields
                 if (username.isEmpty() && password.isEmpty() && age.isEmpty()) {
                     regUsername.setError("Field cannot be empty");
                     regPassword.setError("Field cannot be empty");
@@ -44,7 +45,17 @@ public class SignUp extends AppCompatActivity {
                 }
 
                 if (password.length() < 6) {
-                    regPassword.setError("Enter a longer password");
+                    regPassword.setError("The password has to be 6-characters long at least");
+                    return;
+                }
+
+                if (Integer.parseInt(age) == 0 || age.length() >= 3) {
+                    regAge.setError("Enter a valid age");
+                    return;
+                }
+
+                if (Integer.parseInt(age) < 18) {
+                    regAge.setError("You must be 18 years old to create an account");
                     return;
                 }
 

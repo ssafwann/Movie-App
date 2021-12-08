@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#3975a2"
+    android:background="#522546"
     android:orientation="vertical"
     android:weightSum="100"
     tools:layout_editor_absoluteX="0dp"
@@ -15,21 +15,63 @@
         android:layout_height="match_parent"
         android:orientation="vertical"  >
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_orderD"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="#fff"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Light"
-        app:navigationIcon="?attr/homeAsUpIndicator"
-        app:popupTheme="@style/Theme.AppCompat.Light"
-        tools:ignore="MissingConstraints" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/order_rv"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="675dp" />
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="-1dp">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_orderD"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="#fff"
+                android:elevation="4dp"
+                android:theme="@style/ThemeOverlay.AppCompat.Light"
+                app:navigationIcon="?attr/homeAsUpIndicator"
+                app:popupTheme="@style/Theme.AppCompat.Light"
+                tools:ignore="MissingConstraints" />
+
+
+            <TextView
+                android:id="@+id/movie_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="22dp"
+                android:text="Click on the order to view details "
+                android:textColor="#fff"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/divider3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_orderD" />
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="409dp"
+                android:layout_height="3dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginBottom="598dp"
+                android:background="#fff"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/order_rv"
+                android:layout_width="match_parent"
+                android:layout_height="590dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

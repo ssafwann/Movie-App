@@ -20,8 +20,11 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
 
@@ -51,9 +54,28 @@ public class UserProfile extends AppCompatActivity  {
         orderHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent (getApplication(), OrderHistory.class);
-                intent.putExtra("user", loggedInUser);
-                startActivity(intent);
+                DatabaseReference rootRef = FirebaseDatabase.getInstance("https://movie-app-d9b4f-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                        .getReference("purchases");
+
+                // check if user has made any purchases or not
+                // if yes then they can be sent to the activity
+                rootRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.hasChild(loggedInUser.getUsername())) {
+                            Intent intent = new Intent (getApplication(), OrderHistory.class);
+                            intent.putExtra("user", loggedInUser);
+                            startActivity(intent);
+                        }
+                        else {
+                            Toast toast = Toast.makeText(getApplication(), "you have made no purchases" ,Toast.LENGTH_SHORT);
+                            toast.show();
+                        }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
             }
         });
     }
