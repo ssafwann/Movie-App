@@ -1,14 +1,16 @@
+/*
+    The class is responsible for letting users log in to the app
+    They can also chose to register an account from this class
+ */
 package com.example.movieapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,7 +29,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // button that sends to the sign up page
+        // button that sends to you to the sign up page
         Button button = (Button) findViewById(R.id.signup_btn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +87,7 @@ public class Login extends AppCompatActivity {
         }
     }
 
+    // function responsible for checking user credentials and sending them to the home page if valid
     private void isUser() {
         String userEnteredUsername = username.getEditText().getText().toString().trim();
         String userEnteredPassword= password.getEditText().getText().toString().trim();

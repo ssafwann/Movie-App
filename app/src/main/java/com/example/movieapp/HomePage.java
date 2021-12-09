@@ -1,3 +1,8 @@
+/*
+    The class is the screen the user sees upon successful login
+    It has the recycler view with all the movies which can be clicked on
+    It is also one of the classes in the navigation drawer
+ */
 package com.example.movieapp;
 
 import androidx.annotation.NonNull;
@@ -5,7 +10,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -15,11 +19,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.Toast;
-
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
@@ -113,7 +115,9 @@ public class HomePage extends AppCompatActivity implements NavigationBarView.OnI
             @Override
             public boolean onClose() {
                 finish();
+                overridePendingTransition(0, 0);
                 startActivity(getIntent());
+                overridePendingTransition(0, 0);
                 return false;
             }
         });
@@ -124,8 +128,8 @@ public class HomePage extends AppCompatActivity implements NavigationBarView.OnI
     {
         FirebaseRecyclerOptions<MovieModel> options =
                 new FirebaseRecyclerOptions.Builder<MovieModel>()
-                        .setQuery(FirebaseDatabase.getInstance("https://movie-app-d9b4f-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("movie").orderByChild("name").startAt(s).endAt(s), MovieModel.class).build();
-
+                        .setQuery(FirebaseDatabase.getInstance("https://movie-app-d9b4f-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                                .getReference().child("movie").orderByChild("name").startAt(s).endAt(s), MovieModel.class).build();
         onStop();
         mainAdapter = new MovieAdapter(options);
         mainAdapter.startListening();

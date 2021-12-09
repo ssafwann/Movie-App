@@ -1,11 +1,11 @@
+/*
+    The class is the used to represent a order entity, it contains all the fields that are stored in the firebase
+ */
 package com.example.movieapp;
 
-
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class OrderModel implements Serializable {
 

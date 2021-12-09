@@ -1,3 +1,6 @@
+/*
+    The class is the recycler view adapter for the "Cart" class
+ */
 package com.example.movieapp;
 
 import android.view.LayoutInflater;
@@ -5,10 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -28,7 +29,6 @@ public class CartAdapter extends FirebaseRecyclerAdapter<MovieModel,CartAdapter.
     public void setOnModelClickListener(CartAdapter.OnModelClickListener listener) {
         this.onModelClickListener = listener;
     }
-
 
     @Override
     protected void onBindViewHolder(@NonNull myViewHolder myViewHolder, int i, @NonNull MovieModel movieModel) {

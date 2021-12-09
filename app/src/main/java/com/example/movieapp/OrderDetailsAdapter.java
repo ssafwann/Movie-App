@@ -1,3 +1,6 @@
+/*
+    The class is the recycler view adapter for the "OrderDetails" class it shows all the movies the user purchased
+ */
 package com.example.movieapp;
 
 import android.view.LayoutInflater;
@@ -32,7 +35,6 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final MovieModel movie = movies.get(position);
         holder.movieName.setText(movies.get(position).getName());
         holder.price.setText(String.valueOf(movies.get(position).getPrice()));
 

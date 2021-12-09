@@ -1,7 +1,9 @@
+/*
+    The class is the used to represent a user entity, it contains all the fields that are stored in the firebase
+ */
 package com.example.movieapp;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 public class User implements Serializable {
 

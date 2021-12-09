@@ -1,9 +1,9 @@
+/*
+    The class is the used to represent a movie entity, it contains all the fields that are stored in the firebase
+ */
 package com.example.movieapp;
 
-import android.media.Image;
-
 import java.io.Serializable;
-import java.net.URL;
 
 public class MovieModel implements Serializable {
 

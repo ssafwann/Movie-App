@@ -1,27 +1,26 @@
+/*
+    The class which is responsible for handling all the cart related stuff
+    This class is accessed from the navigation drawer
+ */
 package com.example.movieapp;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Movie;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -69,70 +68,8 @@ public class Cart extends AppCompatActivity {
         purchase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                purhaseCartItems();
+                purchaseCartItems();
             }
-        });
-
-    }
-
-    private void purhaseCartItems() {
-        if (allCartItems.size() != 0) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(Cart.this);
-            builder.setTitle("Purchase Confirmation");
-            builder.setMessage("Do you wish to confirm your purchase?");
-            builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    if (allCartItems.size() != 0) {
-
-                    }
-                    newCredits = newCredits + loggedInUser.credits;
-                    DatabaseReference reference = FirebaseDatabase.getInstance("https://movie-app-d9b4f-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users");
-                    loggedInUser.setCredits(newCredits);
-                    Toast toast = Toast.makeText(getApplication(), "purchase successful, credits added" ,Toast.LENGTH_SHORT);
-                    toast.show();
-
-                    addCartItemsToOrder();
-                    finish();
-                    startActivity(getIntent());
-
-                    reference.child(loggedInUser.getUsername()).child("credits").setValue(newCredits);
-                }
-            });
-            builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-            builder.show();
-        }
-        else {
-            Toast toast = Toast.makeText(getApplication(), "no items in cart" ,Toast.LENGTH_SHORT);
-            toast.show();
-        }
-    }
-
-    private void addCartItemsToOrder() {
-        DatabaseReference reference = FirebaseDatabase.getInstance("https://movie-app-d9b4f-default-rtdb.asia-southeast1.firebasedatabase.app/")
-                .getReference("cart").child(loggedInUser.getUsername());
-        DatabaseReference reference1 = FirebaseDatabase.getInstance("https://movie-app-d9b4f-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("purchases");
-        String date = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(new Date());
-        String id = reference.push().getKey();
-        OrderModel helperClass = new OrderModel(allCartItems, date, total_price[0], Long.valueOf(allCartItems.size()), id, (newCredits - oldCredits));
-        reference1.child(loggedInUser.getUsername()).child(id).setValue(helperClass);
-        reference.setValue(null);
-    }
-
-    public void onRecyclerItemClick() {
-        mainAdapter.setOnModelClickListener(movieModel -> {
-            DatabaseReference reference = FirebaseDatabase.getInstance("https://movie-app-d9b4f-default-rtdb.asia-southeast1.firebasedatabase.app/")
-                    .getReference("cart").child(loggedInUser.getUsername()).child(movieModel.getName());
-            reference.setValue(null);
-            finish();
-            startActivity(getIntent());
-            Toast toast = Toast.makeText(getApplication(), "item was removed" ,Toast.LENGTH_SHORT);
-            toast.show();
         });
     }
 
@@ -165,6 +102,70 @@ public class Cart extends AppCompatActivity {
         getSupportActionBar().setTitle(null);
         toggle.setDrawerIndicatorEnabled(true);
         toggle.syncState();
+    }
+
+    // function which is does all the stuff related to purchasing all the items in the cart
+    private void purchaseCartItems() {
+        if (allCartItems.size() != 0) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(Cart.this);
+            builder.setTitle("Purchase Confirmation");
+            builder.setMessage("Do you wish to confirm your purchase?");
+            builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    newCredits = newCredits + loggedInUser.credits;
+                    DatabaseReference reference = FirebaseDatabase.getInstance("https://movie-app-d9b4f-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("users");
+                    loggedInUser.setCredits(newCredits);
+                    Toast toast = Toast.makeText(getApplication(), "purchase successful, credits added" ,Toast.LENGTH_SHORT);
+                    toast.show();
+
+                    addCartItemsToOrder();
+                    recreate();
+                    reference.child(loggedInUser.getUsername()).child("credits").setValue(newCredits);
+                }
+            });
+            builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            builder.show();
+        }
+        else {
+            Toast toast = Toast.makeText(getApplication(), "no items in cart" ,Toast.LENGTH_SHORT);
+            toast.show();
+        }
+
+    }
+
+    private void addCartItemsToOrder() {
+        DatabaseReference reference = FirebaseDatabase.getInstance("https://movie-app-d9b4f-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                .getReference("cart").child(loggedInUser.getUsername());
+        DatabaseReference reference1 = FirebaseDatabase.getInstance("https://movie-app-d9b4f-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference("purchases");
+        String date = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(new Date());
+        String id = reference.push().getKey();
+        OrderModel helperClass = new OrderModel(allCartItems, date, total_price[0], Long.valueOf(allCartItems.size()), id, (newCredits - oldCredits));
+        reference1.child(loggedInUser.getUsername()).child(id).setValue(helperClass);
+        reference.setValue(null);
+
+        // show the details of the order
+        Intent intent = new Intent (getApplication(), OrderDetails.class);
+        intent.putExtra("order", helperClass);
+        intent.putExtra("user", loggedInUser);
+        startActivity(intent);
+    }
+
+    public void onRecyclerItemClick() {
+        mainAdapter.setOnModelClickListener(movieModel -> {
+            DatabaseReference reference = FirebaseDatabase.getInstance("https://movie-app-d9b4f-default-rtdb.asia-southeast1.firebasedatabase.app/")
+                    .getReference("cart").child(loggedInUser.getUsername()).child(movieModel.getName());
+            reference.setValue(null);
+            finish();
+            startActivity(getIntent());
+            Toast toast = Toast.makeText(getApplication(), "item was removed" ,Toast.LENGTH_SHORT);
+            toast.show();
+        });
     }
 
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {

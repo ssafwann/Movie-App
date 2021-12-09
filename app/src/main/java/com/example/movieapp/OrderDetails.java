@@ -1,3 +1,7 @@
+/*
+    This class is accessed after a user a user click on of the item in the orders recycler view in "OrderHistory" class
+    It shows user the details of a specific order they clicked on
+ */
 package com.example.movieapp;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,10 +12,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-
 import java.util.ArrayList;
 import java.util.List;
 

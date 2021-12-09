@@ -1,3 +1,7 @@
+/*
+    The class is accessed after user clicks on the button to sign up in the log in page
+    It will get users input and store it in the firebase if everything is valid
+ */
 package com.example.movieapp;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +30,7 @@ public class SignUp extends AppCompatActivity {
         TextInputLayout regAge = findViewById(R.id.reg_age);
         Button signUpBtn = (Button) findViewById(R.id.sign_up_btn);
 
+        // method that stores user's inputted data into firebase if everything is valid
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -36,7 +41,7 @@ public class SignUp extends AppCompatActivity {
                 int credits = 150; // give user 150 credits for registration
                 String id = reference.push().getKey();
 
-                // different checking criteria for the fields
+                // different checking criteria for the all the fields
                 if (username.isEmpty() && password.isEmpty() && age.isEmpty()) {
                     regUsername.setError("Field cannot be empty");
                     regPassword.setError("Field cannot be empty");
@@ -63,6 +68,7 @@ public class SignUp extends AppCompatActivity {
                 regUsername.setErrorEnabled(false);
                 regAge.setErrorEnabled(false);
 
+                // if everything is valid and fine then can be stored in firebase
                 User helperClass = new User(username,password,age,credits,id);
                 reference.child(username).setValue(helperClass);
                 Toast toast = Toast.makeText(getApplicationContext(),"Account created, you may login",Toast.LENGTH_SHORT);

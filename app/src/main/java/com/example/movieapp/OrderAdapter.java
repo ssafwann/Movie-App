@@ -1,17 +1,14 @@
+/*
+    The class is the recycler view adapter for the "OrderHistory" class
+ */
 package com.example.movieapp;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
@@ -25,8 +22,6 @@ public class OrderAdapter extends FirebaseRecyclerAdapter<OrderModel,OrderAdapte
         void onClick(OrderModel orderModel);
     }
 
-
-
     private OnModelClickListener onModelClickListener;
 
     public void setOnModelClickListener(OnModelClickListener listener) {
@@ -37,7 +32,7 @@ public class OrderAdapter extends FirebaseRecyclerAdapter<OrderModel,OrderAdapte
     protected void onBindViewHolder(@NonNull myViewHolder myViewHolder, int i, @NonNull OrderModel orderModel) {
         myViewHolder.date.setText(orderModel.getPurchaseDate());
         myViewHolder.price.setText(String.valueOf(orderModel.getPrice()));
-        myViewHolder.orderNum.setText(String.valueOf(orderModel.getQuantity()));
+        myViewHolder.itemCount.setText(String.valueOf(orderModel.getQuantity()));
 
         if (onModelClickListener != null) {
             myViewHolder.itemView.setOnClickListener(v -> {
@@ -45,8 +40,6 @@ public class OrderAdapter extends FirebaseRecyclerAdapter<OrderModel,OrderAdapte
             });
         }
     }
-
-
 
     @NonNull
     @Override
@@ -56,12 +49,12 @@ public class OrderAdapter extends FirebaseRecyclerAdapter<OrderModel,OrderAdapte
     }
 
     class myViewHolder extends RecyclerView.ViewHolder {
-        TextView date, price, orderNum;
+        TextView date, price, itemCount;
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
             date = (TextView) itemView.findViewById(R.id.order_date);
-            orderNum = (TextView) itemView.findViewById(R.id.order_num_data);
+            itemCount = (TextView) itemView.findViewById(R.id.order_num_data);
             price = (TextView) itemView.findViewById(R.id.order_total_price);
         }
     }

@@ -1,3 +1,7 @@
+/*
+    This class is accessed after a user clicks on the button in the user profile to see their order history
+    It shows a recycler view with all the orders made by the user
+ */
 package com.example.movieapp;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,8 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
-
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.FirebaseDatabase;
 

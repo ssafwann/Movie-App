@@ -1,3 +1,7 @@
+/*
+    The class which is shows the user profile, this is where you see the credits and the user's order history
+    This class is one of the classes in the navigation drawer.
+ */
 package com.example.movieapp;
 
 import androidx.annotation.NonNull;
@@ -144,10 +148,7 @@ public class UserProfile extends AppCompatActivity  {
         builder.show();
     }
 
-    private void readData() {
-        ref = FirebaseDatabase.getInstance().getReference("users");
 
-    }
 
     private void showAllUserData() {
         String user_username = loggedInUser.getUsername();
