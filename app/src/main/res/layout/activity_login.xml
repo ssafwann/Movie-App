@@ -16,7 +16,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_gravity="center"
-        android:src="@drawable/icon_account" />
+        android:src="@drawable/account" />
 
     <TextView
         android:id="@+id/logo_name"
