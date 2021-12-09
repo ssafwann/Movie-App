@@ -32,7 +32,7 @@ public class OrderAdapter extends FirebaseRecyclerAdapter<OrderModel,OrderAdapte
     protected void onBindViewHolder(@NonNull myViewHolder myViewHolder, int i, @NonNull OrderModel orderModel) {
         myViewHolder.date.setText(orderModel.getPurchaseDate());
         myViewHolder.price.setText(String.valueOf(orderModel.getPrice()));
-        myViewHolder.itemCount.setText(String.valueOf(orderModel.getQuantity()));
+        myViewHolder.orderNum.setText(String.valueOf(i + 1)); // + 1 because i starts from 0
 
         if (onModelClickListener != null) {
             myViewHolder.itemView.setOnClickListener(v -> {
@@ -48,13 +48,17 @@ public class OrderAdapter extends FirebaseRecyclerAdapter<OrderModel,OrderAdapte
         return new myViewHolder(view);
     }
 
+    public int getPosition(int position) {
+        return position;
+    }
+
     class myViewHolder extends RecyclerView.ViewHolder {
-        TextView date, price, itemCount;
+        TextView date, price, orderNum;
 
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
             date = (TextView) itemView.findViewById(R.id.order_date);
-            itemCount = (TextView) itemView.findViewById(R.id.order_num_data);
+            orderNum = (TextView) itemView.findViewById(R.id.order_num_data);
             price = (TextView) itemView.findViewById(R.id.order_total_price);
         }
     }
