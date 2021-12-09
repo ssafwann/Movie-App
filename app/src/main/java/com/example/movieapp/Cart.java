@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -85,8 +86,7 @@ public class Cart extends AppCompatActivity {
 
         mainAdapter = new CartAdapter(options);
         recyclerView.setAdapter(mainAdapter);
-        onRecyclerItemClick();
-
+        onRecyclerItemSwipe();
 
         // toolbar and navigation drawer code
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -103,6 +103,8 @@ public class Cart extends AppCompatActivity {
         toggle.setDrawerIndicatorEnabled(true);
         toggle.syncState();
     }
+
+
 
     // function which is does all the stuff related to purchasing all the items in the cart
     private void purchaseCartItems() {
@@ -156,16 +158,24 @@ public class Cart extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onRecyclerItemClick() {
-        mainAdapter.setOnModelClickListener(movieModel -> {
-            DatabaseReference reference = FirebaseDatabase.getInstance("https://movie-app-d9b4f-default-rtdb.asia-southeast1.firebasedatabase.app/")
-                    .getReference("cart").child(loggedInUser.getUsername()).child(movieModel.getName());
-            reference.setValue(null);
-            finish();
-            startActivity(getIntent());
-            Toast toast = Toast.makeText(getApplication(), "item was removed" ,Toast.LENGTH_SHORT);
-            toast.show();
-        });
+    // function responsible for deleting items from cart
+    private void onRecyclerItemSwipe() {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT|ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                mainAdapter.deleteItem(viewHolder.getAdapterPosition());
+                finish();
+                startActivity(getIntent());
+                Toast toast = Toast.makeText(getApplication(), "item was removed" ,Toast.LENGTH_SHORT);
+                toast.show();
+
+            }
+        }).attachToRecyclerView(recyclerView);
     }
 
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
